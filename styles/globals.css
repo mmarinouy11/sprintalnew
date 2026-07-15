@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Sprintal design system — spec section 10.
+ *
+ * All design tokens live here as CSS custom properties (architectural rule #7).
+ * Fonts are injected by next/font in app/layout.tsx, which sets:
+ *   --font-display / --font-body -> Outfit
+ *   --font-mono                  -> IBM Plex Mono
+ *
+ * The one hard-coded color in the app is the primary button brand #5C6AC4,
+ * which is intentionally NOT driven by a token (see .btn-primary below and
+ * `brand-fixed` in tailwind.config.ts).
+ */
+
+:root {
+  /* Surfaces */
+  --background: #0e1116;
+  --background-fg: #e6e9ef;
+  --sidebar: #161a22;
+  --sidebar-fg: #aab2c0;
+  --raised: #1c222c;
+  --raised-fg: #e6e9ef;
+  --border: #262d3a;
+  --muted: #8b94a7;
+
+  /* Signal quality — how legible the evidence behind a bet is */
+  --signal-strong: #3fb950;
+  --signal-unclear: #d29922;
+  --signal-weak: #f85149;
+
+  /* Bet lifecycle states */
+  --bet-active: #5c6ac4;
+  --bet-scaled: #2f81f7;
+  --bet-pivoted: #d29922;
+  --bet-done: #3fb950;
+  --bet-killed: #6e7681;
+
+  /* AI coach accent */
+  --coach-accent: #a371f7;
+
+  /* Shape */
+  --radius-card: 12px;
+}
+
+/*
+ * Light theme override. Dark is the default (above) since the product is a
+ * focus surface; light is opt-in via [data-theme="light"] on <html>.
+ */
+[data-theme="light"] {
+  --background: #f6f7f9;
+  --background-fg: #1a1f28;
+  --sidebar: #ffffff;
+  --sidebar-fg: #4b5263;
+  --raised: #ffffff;
+  --raised-fg: #1a1f28;
+  --border: #e2e6ec;
+  --muted: #6a7080;
+
+  --signal-strong: #1a7f37;
+  --signal-unclear: #9a6700;
+  --signal-weak: #cf222e;
+
+  --bet-active: #5c6ac4;
+  --bet-scaled: #0969da;
+  --bet-pivoted: #9a6700;
+  --bet-done: #1a7f37;
+  --bet-killed: #6e7681;
+
+  --coach-accent: #8250df;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--background);
+    color: var(--background-fg);
+    font-family: var(--font-body), system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+}
+
+@layer components {
+  /*
+   * Primary button — architectural rule #7: the brand color is FIXED at
+   * #5C6AC4 and must not be swapped by theme tokens.
+   */
+  .btn-primary {
+    background-color: #5c6ac4;
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    /* slightly darkened brand */
+    background-color: #4d59ad;
+  }
+}

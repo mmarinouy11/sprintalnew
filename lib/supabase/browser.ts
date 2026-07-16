@@ -1,14 +1,16 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Browser Supabase client using the public ANON key.
  *
- * This client is safe to use in client components. It is subject to RLS
- * (rule #2) — it can only ever see what the signed-in user is allowed to see.
- * It must NEVER be given the service_role key (rule #1).
+ * Uses @supabase/ssr's createBrowserClient so the auth session is stored in
+ * COOKIES (not localStorage). That is what lets the server read the session
+ * (getServerSession) and lets middleware gate /[orgSlug]/* routes.
  *
- * Note: per the architecture, most data loading goes through /api routes
- * (rule #1). This client is primarily for Supabase Auth (session/sign-in).
+ * Safe on the client, subject to RLS (rule #2), never given service_role
+ * (rule #1). Most data loading still goes through /api routes (rule #1); this
+ * client is primarily for Supabase Auth (sign-in, OAuth, password updates).
  */
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -21,17 +23,7 @@ export function browserClient(): SupabaseClient {
       "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY.",
     );
   }
-
-  // Reuse a single instance in the browser to keep one auth/realtime session.
   if (cached) return cached;
-
-  cached = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-    },
-  });
-
+  cached = createBrowserClient(supabaseUrl, supabaseAnonKey);
   return cached;
 }

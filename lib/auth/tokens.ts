@@ -1,15 +1,13 @@
 import "server-only";
-import { serviceClient } from "./supabase/service";
+import { serviceClient } from "../supabase/service";
 
 /**
- * Server-side auth helpers used by /app/api routes.
+ * Bearer-token auth helpers for /app/api routes that receive an access token
+ * explicitly (rather than via cookies). Cookie-based session reads should use
+ * getServerSession instead.
  *
- * The flow (rule #1 + #2): a route receives the caller's Supabase access token
- * (Bearer header / cookie), verifies it here to establish identity, and ONLY
- * then uses serviceClient() to read/write with RLS bypassed.
- *
- * This is the skeleton seam — org/plan resolution (getRootPlan walk, rule #3)
- * lands here later. No business logic yet.
+ * Flow (rules #1, #2): verify the token to establish identity, THEN use
+ * serviceClient() (RLS bypassed) to do work.
  */
 
 export interface AuthedUser {
@@ -24,10 +22,7 @@ export function getBearerToken(req: Request): string | null {
   return header.slice("Bearer ".length).trim() || null;
 }
 
-/**
- * Verify an access token and return the authenticated user, or null if invalid.
- * Uses the service client purely to validate the JWT against Supabase Auth.
- */
+/** Verify an access token and return the authenticated user, or null. */
 export async function getUserFromToken(
   token: string,
 ): Promise<AuthedUser | null> {
@@ -36,10 +31,7 @@ export async function getUserFromToken(
   return { id: data.user.id, email: data.user.email ?? null };
 }
 
-/**
- * Convenience: resolve the authed user directly from a request, or null.
- * Routes should return 401 when this yields null before doing any work.
- */
+/** Resolve the authed user directly from a request's Bearer token, or null. */
 export async function requireUser(req: Request): Promise<AuthedUser | null> {
   const token = getBearerToken(req);
   if (!token) return null;

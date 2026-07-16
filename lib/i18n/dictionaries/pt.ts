@@ -14,6 +14,40 @@ export const pt: Dictionary = {
     signals: "Sinais",
     settings: "Configurações",
   },
+  org: {
+    levelBadge: "N{level}",
+    readOnly: "Somente leitura",
+    roles: {
+      owner: "Proprietário",
+      admin: "Administrador",
+      editor: "Editor",
+      viewer: "Leitor",
+    },
+    topbar: {
+      switcher: "Trocar de área",
+      newArea: "Nova área",
+      parent: "Superior",
+      siblings: "Irmãs",
+      children: "Áreas",
+      thisOrg: "Atual",
+    },
+    newSub: {
+      title: "Nova subárea",
+      subtitle: "Crie uma área aninhada dentro de {parent}.",
+      nameLabel: "Nome da área",
+      submit: "Criar área",
+      cancel: "Cancelar",
+    },
+    errors: {
+      generic: "Algo deu errado. Tente novamente.",
+      rateLimited: "Muitas solicitações. Aguarde um momento e tente novamente.",
+      nameRequired: "Digite um nome de área.",
+      parentNotFound: "Não foi possível encontrar essa área superior.",
+      notOwner: "Somente um proprietário pode criar áreas.",
+      depthLimit: "Seu plano não permite áreas tão profundas. Faça upgrade para aninhar mais.",
+      subAreaLimit: "Você atingiu o limite de áreas do seu plano. Faça upgrade para adicionar mais.",
+    },
+  },
   auth: {
     common: {
       email: "E-mail",

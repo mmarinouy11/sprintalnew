@@ -16,6 +16,40 @@ export const en = {
     signals: "Signals",
     settings: "Settings",
   },
+  org: {
+    levelBadge: "L{level}",
+    readOnly: "Read-only",
+    roles: {
+      owner: "Owner",
+      admin: "Admin",
+      editor: "Editor",
+      viewer: "Viewer",
+    },
+    topbar: {
+      switcher: "Switch area",
+      newArea: "New Area",
+      parent: "Parent",
+      siblings: "Siblings",
+      children: "Areas",
+      thisOrg: "Current",
+    },
+    newSub: {
+      title: "New sub-area",
+      subtitle: "Create an area nested under {parent}.",
+      nameLabel: "Area name",
+      submit: "Create area",
+      cancel: "Cancel",
+    },
+    errors: {
+      generic: "Something went wrong. Please try again.",
+      rateLimited: "Too many requests. Please wait a moment and try again.",
+      nameRequired: "Enter an area name.",
+      parentNotFound: "That parent area could not be found.",
+      notOwner: "Only an owner can create areas.",
+      depthLimit: "Your plan doesn’t allow areas this deep. Upgrade to nest further.",
+      subAreaLimit: "You’ve reached the area limit for your plan. Upgrade to add more.",
+    },
+  },
   auth: {
     common: {
       email: "Email",

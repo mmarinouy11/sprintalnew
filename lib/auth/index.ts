@@ -16,3 +16,4 @@ export {
   requireUser,
   type AuthedUser,
 } from "./tokens";
+export { roleAtLeast, isRole } from "./roles";
